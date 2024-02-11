@@ -19,6 +19,22 @@ Here's a list of what my dotfiles cover:
       keybindings for zooming in)
 - [ ] Seamless theme switching
 
+## Usage
+To add all dotfiles to their respective directories, simply run:
+```
+make
+```
+> [!IMPORTANT]
+> I think I should run the below before messing with directories
+
+To remove all stowed dotfiles, run:
+```
+make delete
+```
+To preview what will be stowed, run:
+```
+make dry-run
+```
 ## Setup
 ### Prerequisites
 This repository uses GNU Stow to manage symlinks between this repository and
