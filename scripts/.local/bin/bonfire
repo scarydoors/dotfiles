@@ -1,0 +1,21 @@
+#!/bin/bash
+
+selected=$(fd . ~/personal ~/prog -d 1 --type d \
+  | sed "s/${HOME//\//\\/}/~/" \
+  | fzf-tmux -p80%,80% --border=none --preview 'cand={}; cand=${cand/#\~/$HOME}; if [[ -f "${cand}README.md" ]]; then bat --style=plain --color=always ${cand}README.md; else echo "No README.md"; fi')
+
+if [ $? != 0 ]; then
+  exit
+fi
+
+project_dir=${selected/#\~/$HOME}
+project_name=$(basename $selected)
+
+# 2>/dev/null because we don't need to see the error message
+tmux has-session -t $project_name 2>/dev/null
+if [ $? != 0 ]; then
+  tmux new-session -s $project_name -c $project_dir -d
+  tmux rename-window -t $project_name:1 "main"
+  tmux send-keys -t $project_name:main "cd ${project_dir}" C-m "clear" C-m "nvim ." C-m
+fi
+tmux switch-client -t $project_name
