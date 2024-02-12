@@ -49,6 +49,11 @@ return {
       {
         "<leader><leader>",
         telescope_util.telescope("files"),
+        desc = "Find Files (auto git)",
+      },
+      {
+        "<leader>ff",
+        "<cmd>Telescope find_files no_ignore=true<cr>",
         desc = "Find Files",
       },
       {
